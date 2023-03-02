@@ -82,6 +82,7 @@ a:focus {
   margin: 0.5rem;
   border-radius: 2rem;
   background: #0024b4;
+  text-align: center;
 }
 
 #sidebar ul.components {

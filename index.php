@@ -23,11 +23,10 @@ require_once 'conn.php';
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Bootstrap Sidebar</h3>
+                <h4>Portfolio</h4>
             </div>
 
             <ul class="list-unstyled components">
-                <p>Portfolio</p>
                 <!-- Home menu and sub menu -->
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
