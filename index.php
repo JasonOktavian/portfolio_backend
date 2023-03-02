@@ -1,5 +1,30 @@
 <?php
-require_once 'conn.php';
+session_start();
+
+// if (!isset($_SESSION["login"])) {
+//     header("Location: login.php");
+//     exit;
+// }
+require_once("conn.php");
+require_once("functions.php");
+
+//pagination b
+$jumlahdataperhalaman = 3;
+$jumlahData = count(query("SELECT * FROM product"));
+$jumlahHalaman = ceil($jumlahData / $jumlahdataperhalaman);
+//operation ternari ? (jika ya) :(jika tidak/else)
+$halamanaktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
+// untuk menentukan awal data untuk setiap halaman
+$awalData = ($jumlahdataperhalaman * $halamanaktif) - $jumlahdataperhalaman;
+
+
+$barang = query("SELECT * FROM product LIMIT $awalData, $jumlahdataperhalaman");
+
+
+//tombol cari di klick
+if (isset($_POST["cari"])) {
+    $barang = cari($_POST["keyword"]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -102,26 +127,65 @@ require_once 'conn.php';
             </nav>
             <div id="contents">
 
-                <h2>Collapsible Sidebar Using Bootstrap 4</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <!-- Form Search -->
+                <form action="" method="post" class="mx-auto">
+                    <input type="text" id="keyword" name="keyword" autofocus placeholder="Input Keyword Here" autocomplete="off">
+                    <button type="submit" id="btnCari " name="cari" class="btn-primary">SEARCH</button>
+                </form>
 
-                <div class="line"></div>
+                <!-- Navigasi Pagination -->
 
-                <h2>Lorem Ipsum Dolor</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <?php if ($halamanaktif > 1) : ?>
+                    <a href="?halaman=<?= $halamanaktif - 1; ?>">&lt</a>
+                <?php endif ?>
 
-                <div class="line"></div>
 
-                <h2>Lorem Ipsum Dolor</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+                    <?php if ($i == $halamanaktif) : ?>
+                        <a style="font-weight :bold;" href="?halaman=<?= $i; ?>"><?= $i ?></a>
+                    <?php else : ?>
+                        <a href="?halaman=<?= $i; ?>"><?= $i ?></a>
+                    <?php endif ?>
+                <?php endfor ?>
 
-                <div class="line"></div>
+                <?php if ($halamanaktif < $jumlahHalaman) : ?>
+                    <a href="?halaman=<?= $halamanaktif + 1; ?>">&gt</a>
+                <?php endif ?>
 
-                <h3>Lorem Ipsum Dolor</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <br>
+                <a href="create.php" class="btn btn-primary mb-1 mt-1">Create</a>
+                <a href="logout.php" class="btn btn-primary mb-1 mt-1">Logout</a>
+                <div id="ajaxcon">
+                    <table class="mx-auto" border="1" cellpadding="10" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Produksi</th>
+                                <th>Harga(USD)</th>
+                                <th>Gambar</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>
+                        <?php $i = 1; ?>
+                        <?php foreach ($barang as $row) : ?>
+                            <tbody>
+                                <tr>
+                                    <td><?= $i; ?></td>
+                                    <td><?= $row["nama"]; ?></td>
+                                    <td><?= $row["produksi"]; ?></td>
+                                    <td><?= $row["harga"]; ?></td>
+                                    <td><img style="width: 100px; length: 100px" src="gmbr/<?= $row["gambar"]; ?>"></td>
+                                    <td><a href="update.php?product_id=<?= $row["product_id"]; ?>" class="fas fa-edit"></a> <a href="delete.php?product_id=<?= $row["product_id"]; ?>" class="fas fa-trash" onclick="confirm('Are you Sure?');"></a></td>
+                                </tr>
+                            </tbody>
+                            <?php $i++; ?>
+                        <?php endforeach ?>
+                    </table>
+                </div>
             </div>
         </div>
+    </div>
     </div>
 
 
