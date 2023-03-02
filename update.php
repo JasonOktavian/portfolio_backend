@@ -5,6 +5,7 @@ if (!isset($_SESSION["login"])) {
     exit;
 }
 require_once("conn.php");
+require_once("functions.php");
 
 //ambil data di url
 $id = $_GET["product_id"];

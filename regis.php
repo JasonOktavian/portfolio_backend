@@ -4,7 +4,9 @@ if (!isset($_SESSION["login"])) {
     header("Location: login.php");
     exit;
 }
+
 require_once "conn.php";
+require_once("functions.php");
 
 // Tambah User Baru
 if (isset($_POST["register"])) {

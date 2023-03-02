@@ -1,5 +1,6 @@
 <?php
 require_once("conn.php");
+require_once("functions.php");
 
 if (isset($_POST["submit"])) {
     if (tambah($_POST) > 0) {

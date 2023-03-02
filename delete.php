@@ -5,6 +5,7 @@ if (!isset($_SESSION["login"])) {
     exit;
 }
 require_once('conn.php');
+require_once("functions.php");
 $id = $_GET["product_id"];
 if (hapus($id) > 0) {
     echo "
