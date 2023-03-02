@@ -1,6 +1,12 @@
 <?php
-require_once("conn.php");
-require_once("functions.php");
+session_start();
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+require_once 'conn.php';
+require_once 'functions.php';
+require_once 'navbar.php';
 
 if (isset($_POST["submit"])) {
     if (tambah($_POST) > 0) {
@@ -19,18 +25,6 @@ if (isset($_POST["submit"])) {
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <title>Document</title>
-</head>
 
 <body class="container mt-6">
     <h1>TAMBAH DATA</h1>

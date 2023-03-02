@@ -1,5 +1,6 @@
 <?php
 require_once '../conn.php';
+require_once '../functions.php';
 
 $keyword = $_GET["keyword"];
 $barang = query(
@@ -11,7 +12,7 @@ $barang = query(
 
 ?>
 
-<table class="mx-auto" border="1" cellpadding="10" cellspacing="0">
+<table class="mx-auto tabels" border="1" cellpadding="10" cellspacing="0">
     <thead>
         <tr>
             <th>No</th>

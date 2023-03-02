@@ -57,7 +57,7 @@ if (isset($_POST["cari"])) {
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="#">Home 1</a>
+                            <a href="order.php">Home 1</a>
                         </li>
                         <li>
                             <a href="#">Home 2</a>
@@ -119,7 +119,7 @@ if (isset($_POST["cari"])) {
                                 <a class="nav-link" href="#">Page</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
+                                <a href="logout.php" class="nav-link">Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -154,9 +154,8 @@ if (isset($_POST["cari"])) {
 
                 <br>
                 <a href="create.php" class="btn btn-primary mb-1 mt-1">Create</a>
-                <a href="logout.php" class="btn btn-primary mb-1 mt-1">Logout</a>
                 <div id="ajaxcon">
-                    <table class="mx-auto" border="1" cellpadding="10" cellspacing="0">
+                    <table class="mx-auto tabels" border="1" cellpadding="10" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -176,7 +175,10 @@ if (isset($_POST["cari"])) {
                                     <td><?= $row["produksi"]; ?></td>
                                     <td><?= $row["harga"]; ?></td>
                                     <td><img style="width: 100px; length: 100px" src="gmbr/<?= $row["gambar"]; ?>"></td>
-                                    <td><a href="update.php?product_id=<?= $row["product_id"]; ?>" class="fas fa-edit"></a> <a href="delete.php?product_id=<?= $row["product_id"]; ?>" class="fas fa-trash" onclick="confirm('Are you Sure?');"></a></td>
+                                    <td>
+                                        <a href="update.php?product_id=<?= $row["product_id"]; ?>"><i class="fas fa-edit"></i></a>
+                                        <a href="delete.php?product_id=<?= $row["product_id"]; ?>"><i class="fas fa-trash" onclick="confirm('Are you Sure?');"></i></a>
+                                    </td>
                                 </tr>
                             </tbody>
                             <?php $i++; ?>
