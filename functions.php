@@ -44,6 +44,26 @@ function tambah($data)
     return mysqli_affected_rows($conn);
 }
 
+function tambahOrder($data)
+{
+    global $conn;
+    $nama = htmlspecialchars($data["name"]);
+    $produk = htmlspecialchars($data["production"]);
+    $harga = htmlspecialchars($data["price"]);
+
+    // upload gambar
+    $gambar = upload();
+    if (!$gambar) {
+        return false;
+    }
+
+    $sql = "INSERT INTO product
+            VALUES ('', '$nama','$produk', '$harga', '$gambar')";
+
+    mysqli_query($conn, $sql);
+    return mysqli_affected_rows($conn);
+}
+
 function update($data)
 {
     global $conn;

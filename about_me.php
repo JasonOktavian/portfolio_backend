@@ -9,9 +9,8 @@ require_once 'functions.php';
 require_once 'navbar.php';
 ?>
 
-<h1>About Me</h1>
-
 <div class="container">
+    <h1>About Me</h1>
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
