@@ -39,7 +39,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="about_me.php">About</a>
                 </li>
                 <!-- Page Menu and submenu -->
                 <li>
