@@ -14,7 +14,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background: #fafafa;
+  background: #e7e7e7;
 }
 
 p {
@@ -40,9 +40,9 @@ a:focus {
 
 .navbar {
   padding: 1.2rem 0.7rem;
-  background: #1709d3;
+  background: #ffffff;
   border: none;
-  /* border-radius: 1rem; */
+  border-radius: 1rem;
   margin-bottom: 2.5rem;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -61,10 +61,10 @@ a:focus {
 }
 
 .collapse {
-  color: white;
+  color: rgb(0, 0, 0);
 }
 .nav-item:hover {
-  background-color: black;
+  background-color: rgb(190, 187, 187);
   border-radius: 1rem;
 }
 
@@ -75,12 +75,15 @@ a:focus {
 .wrapper {
   display: flex;
   width: 100%;
-  align-items: stretch;
 }
 
 #sidebar {
-  min-width: 250px;
-  max-width: 250px;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 999;
   background: #1709d3;
   color: #ffffff;
   transition: all 0.3s;
@@ -94,7 +97,7 @@ a:focus {
   padding: 1rem;
   margin: 0.5rem;
   border-radius: 2rem;
-  background: #0024b4;
+  background: #0095ff;
   text-align: center;
 }
 
@@ -159,17 +162,18 @@ ul.CTAs a {
     CONTENT STYLE
 ----------------------------------------------------- */
 
-#contents {
-  width: 100%;
-  padding: 20px;
-  min-height: 100vh;
-  margin: 1rem;
-  transition: all 0.3s;
-}
 #content {
-  width: 100%;
+  width: calc(100% - 250px);
+  padding: 40px;
   min-height: 100vh;
   transition: all 0.3s;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#content.active {
+  width: 100%;
 }
 
 /* ---------------------------------------------------
@@ -183,8 +187,13 @@ ul.CTAs a {
   #sidebar.active {
     margin-left: 0;
   }
+  #content {
+    width: 100%;
+  }
+  #content.active {
+    width: calc(100% - 250px);
+  }
   #sidebarCollapse span {
     display: none;
-    color: #0029f6;
   }
 }

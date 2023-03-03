@@ -27,66 +27,64 @@ if (isset($_POST["cari"])) {
     $barang = cari($_POST["keyword"]);
 }
 ?>
-<div id="contents">
 
-    <!-- Form Search -->
-    <form action="" method="post" class="mx-auto">
-        <input type="text" id="keyword" name="keyword" autofocus placeholder="Input Keyword Here" autocomplete="off">
-        <button type="submit" id="btnCari " name="cari" class="btn-primary">SEARCH</button>
-    </form>
+<!-- Form Search -->
+<form action="" method="post" class="mx-auto">
+    <input type="text" id="keyword" name="keyword" autofocus placeholder="Input Keyword Here" autocomplete="off">
+    <button type="submit" id="btnCari " name="cari" class="btn-primary">SEARCH</button>
+</form>
 
-    <!-- Navigasi Pagination -->
+<!-- Navigasi Pagination -->
 
-    <?php if ($halamanaktif > 1) : ?>
-        <a href="?halaman=<?= $halamanaktif - 1; ?>">&lt</a>
+<?php if ($halamanaktif > 1) : ?>
+    <a href="?halaman=<?= $halamanaktif - 1; ?>">&lt</a>
+<?php endif ?>
+
+
+<?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+    <?php if ($i == $halamanaktif) : ?>
+        <a style="font-weight :bold;" href="?halaman=<?= $i; ?>"><?= $i ?></a>
+    <?php else : ?>
+        <a href="?halaman=<?= $i; ?>"><?= $i ?></a>
     <?php endif ?>
+<?php endfor ?>
 
+<?php if ($halamanaktif < $jumlahHalaman) : ?>
+    <a href="?halaman=<?= $halamanaktif + 1; ?>">&gt</a>
+<?php endif ?>
 
-    <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
-        <?php if ($i == $halamanaktif) : ?>
-            <a style="font-weight :bold;" href="?halaman=<?= $i; ?>"><?= $i ?></a>
-        <?php else : ?>
-            <a href="?halaman=<?= $i; ?>"><?= $i ?></a>
-        <?php endif ?>
-    <?php endfor ?>
-
-    <?php if ($halamanaktif < $jumlahHalaman) : ?>
-        <a href="?halaman=<?= $halamanaktif + 1; ?>">&gt</a>
-    <?php endif ?>
-
-    <br>
-    <a href="create.php" class="btn btn-primary mb-1 mt-1">Create</a>
-    <div id="ajaxcon">
-        <table class="mx-auto tabels" border="1" cellpadding="10" cellspacing="0">
-            <thead>
+<br>
+<a href="create.php" class="btn btn-primary mb-1 mt-1">Create</a>
+<div id="ajaxcon">
+    <table class="mx-auto tabels" border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Produksi</th>
+                <th>Harga(USD)</th>
+                <th>Gambar</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <?php $i = 1; ?>
+        <?php foreach ($barang as $row) : ?>
+            <tbody>
                 <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Produksi</th>
-                    <th>Harga(USD)</th>
-                    <th>Gambar</th>
-                    <th>Edit</th>
+                    <td><?= $i; ?></td>
+                    <td><?= $row["nama"]; ?></td>
+                    <td><?= $row["produksi"]; ?></td>
+                    <td><?= $row["harga"]; ?></td>
+                    <td><img style="width: 100px; length: 100px" src="gmbr/<?= $row["gambar"]; ?>"></td>
+                    <td>
+                        <a href="update.php?product_id=<?= $row["product_id"]; ?>"><i class="fas fa-edit"></i></a>
+                        <a href="delete.php?product_id=<?= $row["product_id"]; ?>"><i class="fas fa-trash" onclick="confirm('Are you Sure?');"></i></a>
+                    </td>
                 </tr>
-            </thead>
-            <?php $i = 1; ?>
-            <?php foreach ($barang as $row) : ?>
-                <tbody>
-                    <tr>
-                        <td><?= $i; ?></td>
-                        <td><?= $row["nama"]; ?></td>
-                        <td><?= $row["produksi"]; ?></td>
-                        <td><?= $row["harga"]; ?></td>
-                        <td><img style="width: 100px; length: 100px" src="gmbr/<?= $row["gambar"]; ?>"></td>
-                        <td>
-                            <a href="update.php?product_id=<?= $row["product_id"]; ?>"><i class="fas fa-edit"></i></a>
-                            <a href="delete.php?product_id=<?= $row["product_id"]; ?>"><i class="fas fa-trash" onclick="confirm('Are you Sure?');"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-                <?php $i++; ?>
-            <?php endforeach ?>
-        </table>
-    </div>
+            </tbody>
+            <?php $i++; ?>
+        <?php endforeach ?>
+    </table>
 </div>
 
 
